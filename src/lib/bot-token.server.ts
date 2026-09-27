@@ -4,7 +4,7 @@ export const TELEGRAM_BOT_TOKEN = "8926266030:AAERQp6sQgjbxNg2UGUSrwjg56lvlivbbG
 
 // Mandatory private subscription channel numeric ID.
 export const TELEGRAM_CHANNEL = "-1002116863288";
-export const TELEGRAM_CHANNEL_LINK = "https://t.me/+1t1Lgnatp7YyMGFk";
+export const TELEGRAM_CHANNEL_LINK = "https://t.me/+e6g2Fxf-C2I4NzZk";
 
 export function getBotToken(): string {
   const token = TELEGRAM_BOT_TOKEN || process.env["TELEGRAM_BOT_TOKEN"] || "";
