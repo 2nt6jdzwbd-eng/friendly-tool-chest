@@ -163,6 +163,14 @@ export type Database = {
           user_id: string
         }[]
       }
+      admin_notification_payload: {
+        Args: { _pass: string; _submission_id: string; _user_id: string }
+        Returns: {
+          code: string
+          duration_minutes: number
+          telegram_id: string
+        }[]
+      }
       admin_set_game_rate: {
         Args: { _name: string; _pass: string; _rate: number }
         Returns: undefined
@@ -179,21 +187,30 @@ export type Database = {
       }
       platform_disabled: { Args: { _name: string }; Returns: boolean }
       request_status: { Args: { _user_id: string }; Returns: string }
-      submit_proof:
-        | {
-            Args: { _img1: string; _img2: string; _user_id: string }
-            Returns: string
-          }
-        | {
-            Args: {
-              _force?: boolean
-              _img1: string
-              _img2: string
-              _user_id: string
-            }
-            Returns: string
-          }
-      telegram_id_for_user: { Args: { _user_id: string }; Returns: string }
+      submit_proof: {
+        Args: { _img1: string; _img2: string; _user_id: string }
+        Returns: string
+      }
+      telegram_fulfill_request: {
+        Args: {
+          _code: string
+          _duration_minutes: number
+          _telegram_id: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      telegram_save_pending: {
+        Args: { _first_name: string; _telegram_id: string; _user_id: string }
+        Returns: undefined
+      }
+      telegram_take_pending: {
+        Args: { _telegram_id: string }
+        Returns: {
+          first_name: string
+          user_id: string
+        }[]
+      }
       verify_activation_code: {
         Args: { _code: string }
         Returns: {

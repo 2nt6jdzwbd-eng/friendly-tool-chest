@@ -21,9 +21,6 @@ import {
 } from "@/lib/firebase-signals";
 
 
-export const ADMIN_CODE = "HACKSD";
-
-
 export function ChoiceDialog({
   open,
   onClose,
@@ -68,12 +65,10 @@ export function CodeDialog({
   open,
   onClose,
   onVerified,
-  onAdmin,
 }: {
   open: boolean;
   onClose: () => void;
   onVerified: (s: ActiveSession) => void;
-  onAdmin?: () => void;
 }) {
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
@@ -112,12 +107,6 @@ export function CodeDialog({
 
 
 
-
-    if (value.toUpperCase() === ADMIN_CODE) {
-      sessionStorage.setItem("cvip_admin", ADMIN_CODE);
-      onAdmin?.();
-      return;
-    }
 
     setBusy(true);
     setError(null);

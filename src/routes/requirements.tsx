@@ -729,11 +729,6 @@ function RequirementsPage() {
           setLoading(true);
           setTimeout(() => navigate({ to }), 1500);
         }}
-        onAdmin={() => {
-          setCodeOpen(false);
-          clearAwaitingCode();
-          navigate({ to: "/admin" });
-        }}
       />
     </main>
   );

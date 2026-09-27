@@ -230,12 +230,6 @@ function GamesPage() {
           clearAwaitingCode();
         }}
         onVerified={onVerified}
-        onAdmin={() => {
-          setCodeOpen(false);
-          clearAwaitingCode();
-          setChoice(null);
-          navigate({ to: "/admin" });
-        }}
       />
 
       <LoadingDialog open={loading} />
