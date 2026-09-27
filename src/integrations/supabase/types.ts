@@ -47,6 +47,27 @@ export type Database = {
         }
         Relationships: []
       }
+      game_rates: {
+        Row: {
+          created_at: string
+          name: string
+          rate: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          name: string
+          rate?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          name?: string
+          rate?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pending_starts: {
         Row: {
           created_at: string
@@ -149,6 +170,10 @@ export type Database = {
           duration_minutes: number
           telegram_id: string
         }[]
+      }
+      admin_set_game_rate: {
+        Args: { _name: string; _pass: string; _rate: number }
+        Returns: undefined
       }
       admin_set_platform_disabled: {
         Args: { _disabled: boolean; _name: string; _pass: string }
