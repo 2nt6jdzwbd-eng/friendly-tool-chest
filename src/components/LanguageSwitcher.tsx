@@ -1,5 +1,6 @@
 import { Globe, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 const LANGS: [string, string][] = [
   ["ar", "العربية"], ["en", "English"], ["fr", "Français"], ["es", "Español"], ["de", "Deutsch"],
@@ -63,14 +64,18 @@ function setCookie(code: string) {
 }
 
 // Drive Google's hidden combo box so the page translates instantly, no reload.
+// If the combo never appears (script blocked / slow), fall back to a reload —
+// the googtrans cookie is already set so the page loads translated.
 function applyTranslation(code: string, attempt = 0) {
   const combo = document.querySelector<HTMLSelectElement>("select.goog-te-combo");
   if (!combo) {
     if (attempt < 40) setTimeout(() => applyTranslation(code, attempt + 1), 250);
+    else location.reload();
     return;
   }
+  if (combo.value === code) return;
   combo.value = code;
-  combo.dispatchEvent(new Event("change"));
+  combo.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 export function LanguageSwitcher() {
