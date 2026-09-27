@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as GamesRouteImport } from './routes/games'
+import { Route as RequirementsRouteImport } from './routes/requirements'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as GameAppleRouteImport } from './routes/game.apple'
+import { Route as GameAviatorRouteImport } from './routes/game.aviator'
+import { Route as ApiPublicNotifyRouteImport } from './routes/api/public/notify'
+import { Route as ApiPublicTelegramRouteImport } from './routes/api/public/telegram'
+import { Route as ApiPublicWarnRouteImport } from './routes/api/public/warn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GamesRoute = GamesRouteImport.update({
+  id: '/games',
+  path: '/games',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequirementsRoute = RequirementsRouteImport.update({
+  id: '/requirements',
+  path: '/requirements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameAppleRoute = GameAppleRouteImport.update({
+  id: '/game/apple',
+  path: '/game/apple',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameAviatorRoute = GameAviatorRouteImport.update({
+  id: '/game/aviator',
+  path: '/game/aviator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicNotifyRoute = ApiPublicNotifyRouteImport.update({
+  id: '/api/public/notify',
+  path: '/api/public/notify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicTelegramRoute = ApiPublicTelegramRouteImport.update({
+  id: '/api/public/telegram',
+  path: '/api/public/telegram',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWarnRoute = ApiPublicWarnRouteImport.update({
+  id: '/api/public/warn',
+  path: '/api/public/warn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/games': typeof GamesRoute
+  '/requirements': typeof RequirementsRoute
+  '/terms': typeof TermsRoute
+  '/game/apple': typeof GameAppleRoute
+  '/game/aviator': typeof GameAviatorRoute
+  '/api/public/notify': typeof ApiPublicNotifyRoute
+  '/api/public/telegram': typeof ApiPublicTelegramRoute
+  '/api/public/warn': typeof ApiPublicWarnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/games': typeof GamesRoute
+  '/requirements': typeof RequirementsRoute
+  '/terms': typeof TermsRoute
+  '/game/apple': typeof GameAppleRoute
+  '/game/aviator': typeof GameAviatorRoute
+  '/api/public/notify': typeof ApiPublicNotifyRoute
+  '/api/public/telegram': typeof ApiPublicTelegramRoute
+  '/api/public/warn': typeof ApiPublicWarnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/games': typeof GamesRoute
+  '/requirements': typeof RequirementsRoute
+  '/terms': typeof TermsRoute
+  '/game/apple': typeof GameAppleRoute
+  '/game/aviator': typeof GameAviatorRoute
+  '/api/public/notify': typeof ApiPublicNotifyRoute
+  '/api/public/telegram': typeof ApiPublicTelegramRoute
+  '/api/public/warn': typeof ApiPublicWarnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/games'
+    | '/requirements'
+    | '/terms'
+    | '/game/apple'
+    | '/game/aviator'
+    | '/api/public/notify'
+    | '/api/public/telegram'
+    | '/api/public/warn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/games'
+    | '/requirements'
+    | '/terms'
+    | '/game/apple'
+    | '/game/aviator'
+    | '/api/public/notify'
+    | '/api/public/telegram'
+    | '/api/public/warn'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/games'
+    | '/requirements'
+    | '/terms'
+    | '/game/apple'
+    | '/game/aviator'
+    | '/api/public/notify'
+    | '/api/public/telegram'
+    | '/api/public/warn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  GamesRoute: typeof GamesRoute
+  RequirementsRoute: typeof RequirementsRoute
+  TermsRoute: typeof TermsRoute
+  GameAppleRoute: typeof GameAppleRoute
+  GameAviatorRoute: typeof GameAviatorRoute
+  ApiPublicNotifyRoute: typeof ApiPublicNotifyRoute
+  ApiPublicTelegramRoute: typeof ApiPublicTelegramRoute
+  ApiPublicWarnRoute: typeof ApiPublicWarnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/games': {
+      id: '/games'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof GamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/requirements': {
+      id: '/requirements'
+      path: '/requirements'
+      fullPath: '/requirements'
+      preLoaderRoute: typeof RequirementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/game/apple': {
+      id: '/game/apple'
+      path: '/game/apple'
+      fullPath: '/game/apple'
+      preLoaderRoute: typeof GameAppleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/game/aviator': {
+      id: '/game/aviator'
+      path: '/game/aviator'
+      fullPath: '/game/aviator'
+      preLoaderRoute: typeof GameAviatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/notify': {
+      id: '/api/public/notify'
+      path: '/api/public/notify'
+      fullPath: '/api/public/notify'
+      preLoaderRoute: typeof ApiPublicNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/telegram': {
+      id: '/api/public/telegram'
+      path: '/api/public/telegram'
+      fullPath: '/api/public/telegram'
+      preLoaderRoute: typeof ApiPublicTelegramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/warn': {
+      id: '/api/public/warn'
+      path: '/api/public/warn'
+      fullPath: '/api/public/warn'
+      preLoaderRoute: typeof ApiPublicWarnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  GamesRoute: GamesRoute,
+  RequirementsRoute: RequirementsRoute,
+  TermsRoute: TermsRoute,
+  GameAppleRoute: GameAppleRoute,
+  GameAviatorRoute: GameAviatorRoute,
+  ApiPublicNotifyRoute: ApiPublicNotifyRoute,
+  ApiPublicTelegramRoute: ApiPublicTelegramRoute,
+  ApiPublicWarnRoute: ApiPublicWarnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
