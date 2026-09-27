@@ -1,5 +1,6 @@
 import { Globe, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 const LANGS: [string, string][] = [
   ["ar", "العربية"], ["en", "English"], ["fr", "Français"], ["es", "Español"], ["de", "Deutsch"],
@@ -63,14 +64,18 @@ function setCookie(code: string) {
 }
 
 // Drive Google's hidden combo box so the page translates instantly, no reload.
+// If the combo never appears (script blocked / slow), fall back to a reload —
+// the googtrans cookie is already set so the page loads translated.
 function applyTranslation(code: string, attempt = 0) {
   const combo = document.querySelector<HTMLSelectElement>("select.goog-te-combo");
   if (!combo) {
     if (attempt < 40) setTimeout(() => applyTranslation(code, attempt + 1), 250);
+    else location.reload();
     return;
   }
+  if (combo.value === code) return;
   combo.value = code;
-  combo.dispatchEvent(new Event("change"));
+  combo.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 export function LanguageSwitcher() {
@@ -115,7 +120,7 @@ export function LanguageSwitcher() {
           aria-label="Language"
           value={lang}
           onChange={(e) => change(e.target.value)}
-          className="max-w-[90px] bg-transparent text-xs outline-none"
+          className="max-w-[90px] bg-transparent text-xs outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
         >
           {LANGS.map(([c, n]) => (
             <option key={c} value={c} className="bg-card">
@@ -126,16 +131,18 @@ export function LanguageSwitcher() {
         <div id="gt-element" className="hidden" />
       </label>
 
-      {changing && (
-        <div className="notranslate fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 backdrop-blur-sm">
-          <div className="flex flex-col items-center gap-4 rounded-lg border border-border bg-card px-10 py-8 shadow-lg">
-            <Loader2 className="h-10 w-10 animate-spin text-primary" />
-            <p className="text-lg font-semibold text-foreground">
-              {CHANGING[changing] ?? CHANGING["ar"]}
-            </p>
-          </div>
-        </div>
-      )}
+      {changing &&
+        createPortal(
+          <div className="notranslate fixed inset-0 z-[9999] grid place-items-center bg-background/80 backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-4 rounded-lg border border-border bg-card px-10 py-8 shadow-lg">
+              <Loader2 className="h-10 w-10 animate-spin text-primary" />
+              <p className="text-lg font-semibold text-foreground">
+                {CHANGING[changing] ?? CHANGING["ar"]}
+              </p>
+            </div>
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
