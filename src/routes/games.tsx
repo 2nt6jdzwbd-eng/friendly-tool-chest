@@ -159,7 +159,7 @@ function GamesPage() {
           {GAMES.map((g) => (
             <article key={g.name} className="group flex min-w-0 flex-col overflow-hidden rounded-md border border-border bg-card transition-colors hover:border-primary/70">
               <div className="relative aspect-[4/3] overflow-hidden bg-card">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(200,40,54,0.30),transparent_62%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(14,165,233,0.30),transparent_62%)]" />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,17,19,0.75)_0%,transparent_30%,transparent_62%,rgba(16,17,19,0.85)_100%)]" />
                 <img
                   src={g.img}
