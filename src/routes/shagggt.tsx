@@ -18,7 +18,7 @@ export const Route = createFileRoute("/shagggt")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AdminPage,
+  component: AdminGate,
 });
 
 type Row = {
@@ -48,6 +48,61 @@ const rpc = supabase.rpc.bind(supabase) as unknown as (
 
 
 const GAME_NAMES = ["Apple of fortune", "Crash"];
+
+const ADMIN_PASSWORD = "moneyegypt";
+const GATE_KEY = "shagggt_unlocked";
+
+function AdminGate() {
+  const [unlocked, setUnlocked] = useState(
+    () => typeof window !== "undefined" && window.sessionStorage.getItem(GATE_KEY) === "1",
+  );
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  if (unlocked) return <AdminPage />;
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      window.sessionStorage.setItem(GATE_KEY, "1");
+      setUnlocked(true);
+    } else {
+      setError(true);
+      setPassword("");
+    }
+  };
+
+  return (
+    <main dir="rtl" className="relative z-10 flex min-h-screen items-center justify-center bg-transparent px-4">
+      <form
+        onSubmit={submit}
+        className="w-full max-w-xs rounded-md border border-border bg-card p-6 text-center"
+      >
+        <h1 className="text-lg font-black text-foreground">لوحة المراجعة</h1>
+        <p className="mt-1 text-xs text-muted-foreground">اكتب كلمة السر للدخول</p>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError(false);
+          }}
+          autoFocus
+          autoComplete="current-password"
+          placeholder="كلمة السر"
+          className="mt-4 w-full rounded-lg border border-border bg-background px-3 py-2.5 text-center text-sm text-foreground outline-none focus:border-primary"
+        />
+        {error && <p className="mt-2 text-xs font-bold text-red-400">كلمة السر غير صحيحة</p>}
+        <button
+          type="submit"
+          className="mt-4 w-full rounded-lg bg-primary py-2.5 text-sm font-black text-primary-foreground transition active:scale-95"
+        >
+          دخول
+        </button>
+      </form>
+    </main>
+  );
+}
 
 function AdminPage() {
   const [rows, setRows] = useState<Row[]>([]);
