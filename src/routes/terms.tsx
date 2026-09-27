@@ -243,7 +243,7 @@ function TermsPage() {
         {/* socials */}
         <div className="mt-14 flex gap-3">
           <a
-            href="https://t.me/IIIIIIIIIIIIIIIIIIIIII00"
+            href="https://t.me/+e6g2Fxf-C2I4NzZk"
             target="_blank"
             rel="noreferrer"
              className="flex flex-1 items-center justify-center gap-2 rounded-sm border border-border bg-card py-3 text-sm font-bold text-foreground transition hover:border-primary"
