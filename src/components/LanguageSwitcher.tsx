@@ -76,7 +76,8 @@ export function LanguageSwitcher() {
   const change = (code: string) => {
     setLang(code);
     setCookie(code);
-    applyTranslation(code);
+    // Reload so Google Translate applies the language to the whole site reliably.
+    location.reload();
   };
 
   return (
