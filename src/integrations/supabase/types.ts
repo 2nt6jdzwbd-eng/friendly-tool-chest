@@ -92,20 +92,35 @@ export type Database = {
       platform_status: {
         Row: {
           created_at: string
+          deposit_egp: number | null
+          deposit_usd: number | null
           disabled: boolean
+          logo_url: string | null
           name: string
+          register_url: string | null
+          sort_order: number
           updated_at: string
         }
         Insert: {
           created_at?: string
+          deposit_egp?: number | null
+          deposit_usd?: number | null
           disabled?: boolean
+          logo_url?: string | null
           name: string
+          register_url?: string | null
+          sort_order?: number
           updated_at?: string
         }
         Update: {
           created_at?: string
+          deposit_egp?: number | null
+          deposit_usd?: number | null
           disabled?: boolean
+          logo_url?: string | null
           name?: string
+          register_url?: string | null
+          sort_order?: number
           updated_at?: string
         }
         Relationships: []
@@ -145,6 +160,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_delete_platform: {
+        Args: { _name: string; _pass: string }
+        Returns: undefined
+      }
       admin_delete_submission: {
         Args: { _id: string; _pass: string }
         Returns: undefined
@@ -184,6 +203,18 @@ export type Database = {
         Returns: {
           telegram_id: string
         }[]
+      }
+      admin_upsert_platform: {
+        Args: {
+          _deposit_egp: number
+          _deposit_usd: number
+          _logo_url: string
+          _name: string
+          _old_name: string
+          _pass: string
+          _register_url: string
+        }
+        Returns: undefined
       }
       platform_disabled: { Args: { _name: string }; Returns: boolean }
       request_status: { Args: { _user_id: string }; Returns: string }
