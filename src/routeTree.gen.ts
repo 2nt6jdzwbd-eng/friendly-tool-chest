@@ -10,9 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as RequirementsRouteImport } from './routes/requirements'
+import { Route as ShagggtRouteImport } from './routes/shagggt'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as GameAppleRouteImport } from './routes/game.apple'
 import { Route as GameAviatorRouteImport } from './routes/game.aviator'
@@ -25,11 +25,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GamesRoute = GamesRouteImport.update({
   id: '/games',
   path: '/games',
@@ -38,6 +33,11 @@ const GamesRoute = GamesRouteImport.update({
 const RequirementsRoute = RequirementsRouteImport.update({
   id: '/requirements',
   path: '/requirements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShagggtRoute = ShagggtRouteImport.update({
+  id: '/shagggt',
+  path: '/shagggt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -73,9 +73,9 @@ const ApiPublicWarnRoute = ApiPublicWarnRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/games': typeof GamesRoute
   '/requirements': typeof RequirementsRoute
+  '/shagggt': typeof ShagggtRoute
   '/terms': typeof TermsRoute
   '/game/apple': typeof GameAppleRoute
   '/game/aviator': typeof GameAviatorRoute
@@ -85,9 +85,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/games': typeof GamesRoute
   '/requirements': typeof RequirementsRoute
+  '/shagggt': typeof ShagggtRoute
   '/terms': typeof TermsRoute
   '/game/apple': typeof GameAppleRoute
   '/game/aviator': typeof GameAviatorRoute
@@ -98,9 +98,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/games': typeof GamesRoute
   '/requirements': typeof RequirementsRoute
+  '/shagggt': typeof ShagggtRoute
   '/terms': typeof TermsRoute
   '/game/apple': typeof GameAppleRoute
   '/game/aviator': typeof GameAviatorRoute
@@ -112,9 +112,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
     | '/games'
     | '/requirements'
+    | '/shagggt'
     | '/terms'
     | '/game/apple'
     | '/game/aviator'
@@ -124,9 +124,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/games'
     | '/requirements'
+    | '/shagggt'
     | '/terms'
     | '/game/apple'
     | '/game/aviator'
@@ -136,9 +136,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/admin'
     | '/games'
     | '/requirements'
+    | '/shagggt'
     | '/terms'
     | '/game/apple'
     | '/game/aviator'
@@ -149,9 +149,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
   GamesRoute: typeof GamesRoute
   RequirementsRoute: typeof RequirementsRoute
+  ShagggtRoute: typeof ShagggtRoute
   TermsRoute: typeof TermsRoute
   GameAppleRoute: typeof GameAppleRoute
   GameAviatorRoute: typeof GameAviatorRoute
@@ -169,13 +169,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/games': {
       id: '/games'
       path: '/games'
@@ -188,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/requirements'
       fullPath: '/requirements'
       preLoaderRoute: typeof RequirementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shagggt': {
+      id: '/shagggt'
+      path: '/shagggt'
+      fullPath: '/shagggt'
+      preLoaderRoute: typeof ShagggtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -237,9 +237,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
   GamesRoute: GamesRoute,
   RequirementsRoute: RequirementsRoute,
+  ShagggtRoute: ShagggtRoute,
   TermsRoute: TermsRoute,
   GameAppleRoute: GameAppleRoute,
   GameAviatorRoute: GameAviatorRoute,

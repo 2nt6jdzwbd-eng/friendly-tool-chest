@@ -5,7 +5,7 @@ import { TopBar } from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/shagggt")({
   ssr: false,
   head: () => ({
     meta: [
