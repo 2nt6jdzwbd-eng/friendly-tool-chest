@@ -131,7 +131,7 @@ export function LanguageSwitcher() {
           <div className="flex flex-col items-center gap-4 rounded-lg border border-border bg-card px-10 py-8 shadow-lg">
             <Loader2 className="h-10 w-10 animate-spin text-primary" />
             <p className="text-lg font-semibold text-foreground">
-              {CHANGING[changing] ?? CHANGING.ar}
+              {CHANGING[changing] ?? CHANGING["ar"]}
             </p>
           </div>
         </div>
