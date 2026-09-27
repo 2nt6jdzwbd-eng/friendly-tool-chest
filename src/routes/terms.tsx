@@ -5,13 +5,9 @@ import { TopBar } from "@/components/TopBar";
 import { LoadingDialog } from "@/components/LoadingDialog";
 import { Brand } from "@/components/Brand";
 import { Button } from "@/components/ui/button";
-import logoUltrapari from "@/assets/platform-ultrapari.png";
-import { supabase } from "@/integrations/supabase/client";
+import { fetchPlatforms, platformLogo, type Platform } from "@/lib/platforms";
 
 
-import logo1xBet from "@/assets/platform-1xbet.png";
-import logoLineBet from "@/assets/platform-linebet.png";
-import logoWinWin from "@/assets/platform-winwin.png";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -27,12 +23,6 @@ export const Route = createFileRoute("/terms")({
   component: TermsPage,
 });
 
-const PLATFORMS = [
-  { name: "Ultrapari", logo: logoUltrapari },
-  { name: "1xBet", logo: logo1xBet },
-  { name: "LineBet", logo: logoLineBet },
-  { name: "WinWin", logo: logoWinWin },
-];
 
 const PLATFORM_VIDEOS: Record<string, string> = {
   Ultrapari: "https://www.image2url.com/r2/default/videos/1787257394601-acdcd0ff-9b86-4771-acea-43007f5ad6f0.mp4",
@@ -112,11 +102,13 @@ function TermsPage() {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState<string[]>([]);
   const [maintenance, setMaintenance] = useState(false);
+  const [platforms, setPlatforms] = useState<Platform[]>([]);
 
   useEffect(() => {
     void (async () => {
-      const { data } = await supabase.from("platform_status").select("name, disabled");
-      setDisabled((data ?? []).filter((r) => r.disabled).map((r) => r.name));
+      const list = await fetchPlatforms();
+      setPlatforms(list);
+      setDisabled(list.filter((r) => r.disabled).map((r) => r.name));
     })();
   }, []);
 
@@ -194,7 +186,7 @@ function TermsPage() {
           <TimelineStep n={2} label="step 02 — platform" active={!platform} done={Boolean(platform)}>
 
             <div className="flex flex-wrap justify-center gap-3">
-              {PLATFORMS.map((p) => (
+              {platforms.map((p) => (
                  <Button
                   key={p.name}
                   onClick={() => pick(p.name)}
@@ -208,7 +200,7 @@ function TermsPage() {
                 >
                   {platform === p.name && <span className="absolute inset-0 bg-primary/10" />}
                   <img
-                    src={p.logo}
+                    src={platformLogo(p)}
                     alt={`${p.name} logo`}
                     loading="lazy"
                     width={96}

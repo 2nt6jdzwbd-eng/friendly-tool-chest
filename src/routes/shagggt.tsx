@@ -4,6 +4,7 @@ import { Check, Loader2, Trash2, X } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { PlatformManager } from "@/components/PlatformManager";
 
 export const Route = createFileRoute("/shagggt")({
   ssr: false,
@@ -45,7 +46,6 @@ const rpc = supabase.rpc.bind(supabase) as unknown as (
   args: Record<string, unknown>,
 ) => Promise<{ data: unknown; error: unknown }>;
 
-const PLATFORM_NAMES = ["Ultrapari", "1xBet", "LineBet", "WinWin"];
 
 const GAME_NAMES = ["Apple of fortune", "Crash"];
 
@@ -55,15 +55,9 @@ function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("pending");
   const [preview, setPreview] = useState<string | null>(null);
-  const [disabled, setDisabled] = useState<string[]>([]);
   const [rates, setRates] = useState<Record<string, number>>({});
   const [savingRate, setSavingRate] = useState<string | null>(null);
   const pass = "HACKSD";
-
-  const loadPlatforms = useCallback(async () => {
-    const { data } = await supabase.from("platform_status").select("name, disabled");
-    setDisabled((data ?? []).filter((r) => r.disabled).map((r) => r.name));
-  }, []);
 
   const loadRates = useCallback(async () => {
     const { data } = await supabase.from("game_rates").select("name, rate");
@@ -86,19 +80,6 @@ function AdminPage() {
     }
   };
 
-  const togglePlatform = async (name: string) => {
-    const next = !disabled.includes(name);
-    setDisabled((cur) => (next ? [...cur, name] : cur.filter((n) => n !== name)));
-    const { error } = await rpc("admin_set_platform_disabled", {
-      _pass: pass,
-      _name: name,
-      _disabled: next,
-    });
-    if (error) {
-      window.alert("تعذر تحديث حالة المنصة");
-      void loadPlatforms();
-    }
-  };
 
 
 
@@ -125,9 +106,8 @@ function AdminPage() {
 
   useEffect(() => {
     void load();
-    void loadPlatforms();
     void loadRates();
-  }, [load, loadPlatforms, loadRates]);
+  }, [load, loadRates]);
 
   const setStatus = async (row: Row, status: "approved" | "rejected") => {
     setBusy(row.id);
@@ -197,27 +177,7 @@ function AdminPage() {
       <div className="mx-auto max-w-md px-4 pt-6">
         <h1 className="mt-3 border-b border-border pb-3 text-center text-4xl text-foreground">لوحة المراجعة</h1>
 
-        <section dir="rtl" className="mt-5 rounded-md border border-border bg-card p-3">
-          <h2 className="text-center text-xs font-black text-foreground">إيقاف / تشغيل المنصات</h2>
-          <div className="mt-3 flex flex-col gap-2">
-            {PLATFORM_NAMES.map((name) => {
-              const off = disabled.includes(name);
-              return (
-                <div key={name} className="flex items-center justify-between rounded-xl border border-primary/20 px-3 py-2">
-                  <span className="text-xs font-black text-foreground">{name}</span>
-                  <button
-                    onClick={() => togglePlatform(name)}
-                    className={`rounded-lg px-3 py-1.5 text-[11px] font-black transition active:scale-95 ${
-                      off ? "bg-red-500/20 text-red-400" : "bg-primary/20 text-primary"
-                    }`}
-                  >
-                    {off ? "تحت الصيانة" : "تعمل"}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        </section>
+        <PlatformManager pass={pass} />
 
         <section dir="rtl" className="mt-4 rounded-md border border-border bg-card p-3">
           <h2 className="text-center text-xs font-black text-foreground">نسبة الفوز (Win rate) للألعاب</h2>
