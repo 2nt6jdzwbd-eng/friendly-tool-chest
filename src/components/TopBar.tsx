@@ -1,8 +1,7 @@
-import { ChevronLeft, Users } from "lucide-react";
+import { BadgeCheck, ChevronLeft, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Brand } from "@/components/Brand";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 
 export function TopBar({ showBack = true }: { showBack?: boolean }) {
@@ -35,7 +34,13 @@ export function TopBar({ showBack = true }: { showBack?: boolean }) {
           <Brand className="text-3xl leading-none" />
         </div>
         <div className="flex items-center gap-2">
-          <LanguageSwitcher />
+          <span className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold text-foreground">
+            <span>سكريبت موثق</span>
+            <BadgeCheck
+              aria-label="موثق"
+              className="h-4 w-4 shrink-0 fill-success/15 text-success"
+            />
+          </span>
           <span className="hidden items-center gap-1.5 border-l-2 border-primary bg-primary/10 px-3 py-1 text-[11px] font-semibold text-foreground min-[400px]:flex">
             <Users className="h-3.5 w-3.5 text-primary" />
             <span className="notranslate">{online}</span>
