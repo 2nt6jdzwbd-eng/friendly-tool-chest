@@ -68,6 +68,27 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_status: {
+        Row: {
+          created_at: string
+          disabled: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          disabled?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          disabled?: boolean
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           created_at: string
@@ -129,12 +150,17 @@ export type Database = {
           telegram_id: string
         }[]
       }
+      admin_set_platform_disabled: {
+        Args: { _disabled: boolean; _name: string; _pass: string }
+        Returns: undefined
+      }
       admin_set_submission_status: {
         Args: { _id: string; _pass: string; _status: string }
         Returns: {
           telegram_id: string
         }[]
       }
+      platform_disabled: { Args: { _name: string }; Returns: boolean }
       request_status: { Args: { _user_id: string }; Returns: string }
       submit_proof: {
         Args: { _img1: string; _img2: string; _user_id: string }
