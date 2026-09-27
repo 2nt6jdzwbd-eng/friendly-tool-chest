@@ -424,7 +424,6 @@ function RequirementsPage() {
           _user_id: uid,
           _img1: paths[0],
           _img2: paths[1],
-          _force: isMaster,
         });
         const out = typeof res.data === "string" ? res.data : "";
 
