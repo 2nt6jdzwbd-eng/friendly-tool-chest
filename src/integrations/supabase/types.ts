@@ -14,13 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activation_codes: {
+        Row: {
+          code: string
+          created_at: string
+          duration_minutes: number
+          expires_at: string
+          id: string
+          telegram_id: string | null
+          used_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          duration_minutes?: number
+          expires_at: string
+          id?: string
+          telegram_id?: string | null
+          used_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          duration_minutes?: number
+          expires_at?: string
+          id?: string
+          telegram_id?: string | null
+          used_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      pending_starts: {
+        Row: {
+          created_at: string
+          first_name: string | null
+          telegram_id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          first_name?: string | null
+          telegram_id: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          first_name?: string | null
+          telegram_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      submissions: {
+        Row: {
+          created_at: string
+          id: string
+          image1_url: string
+          image2_url: string
+          status: string
+          telegram_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image1_url: string
+          image2_url: string
+          status?: string
+          telegram_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image1_url?: string
+          image2_url?: string
+          status?: string
+          telegram_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_delete_submission: {
+        Args: { _id: string; _pass: string }
+        Returns: undefined
+      }
+      admin_list_submissions: {
+        Args: { _pass: string }
+        Returns: {
+          activation_code: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          image1_url: string
+          image2_url: string
+          status: string
+          telegram_id: string
+          user_id: string
+        }[]
+      }
+      admin_notification_payload: {
+        Args: { _pass: string; _submission_id: string; _user_id: string }
+        Returns: {
+          code: string
+          duration_minutes: number
+          telegram_id: string
+        }[]
+      }
+      admin_set_submission_status: {
+        Args: { _id: string; _pass: string; _status: string }
+        Returns: {
+          telegram_id: string
+        }[]
+      }
+      request_status: { Args: { _user_id: string }; Returns: string }
+      submit_proof: {
+        Args: { _img1: string; _img2: string; _user_id: string }
+        Returns: string
+      }
+      telegram_fulfill_request: {
+        Args: {
+          _code: string
+          _duration_minutes: number
+          _telegram_id: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      telegram_save_pending: {
+        Args: { _first_name: string; _telegram_id: string; _user_id: string }
+        Returns: undefined
+      }
+      telegram_take_pending: {
+        Args: { _telegram_id: string }
+        Returns: {
+          first_name: string
+          user_id: string
+        }[]
+      }
+      verify_activation_code: {
+        Args: { _code: string }
+        Returns: {
+          expires_at: string
+          status: string
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
