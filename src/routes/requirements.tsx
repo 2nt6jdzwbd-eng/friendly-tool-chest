@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { fetchPlatforms, type Platform } from "@/lib/platforms";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -64,19 +65,6 @@ const PLATFORM_PROMOS: Record<string, string> = {
   LineBet: "KA117",
 };
 
-const PLATFORM_LINKS: Record<string, string> = {
-  Ultrapari: "https://refpa42156.com/L?tag=d_5991719m_118431c_apk&site=5991719&ad=118431",
-  "1xBet": "https://reffpa.com/L?tag=d_2845435m_27409c_&site=2845435&ad=27409",
-  LineBet: "https://lb-aff.com/L?tag=d_6015821m_66803c_apk1&site=6015821&ad=66803",
-  WinWin: "https://refpa49781.com/L?tag=d_5981657m_68383c_&site=5981657&ad=68383",
-};
-
-const PLATFORM_DEPOSITS: Record<string, string[]> = {
-  Ultrapari: ["150 جنيه", "4 دولار"],
-  "1xBet": ["300 جنيه", "6 دولار"],
-  LineBet: ["300 جنيه", "6 دولار"],
-  WinWin: ["200 جنيه", "5 دولار"],
-};
 
 /* ---------- shared bits ---------- */
 
@@ -246,6 +234,13 @@ function Upload({
 function RequirementsPage() {
   const { platform } = Route.useSearch();
   const promo = PLATFORM_PROMOS[platform] ?? PROMO;
+  const [info, setInfo] = useState<Platform | null>(null);
+  useEffect(() => {
+    void fetchPlatforms().then((list) => setInfo(list.find((p) => p.name === platform) ?? null));
+  }, [platform]);
+  const deposits = info
+    ? [info.deposit_egp != null ? `${info.deposit_egp} جنيه` : null, info.deposit_usd != null ? `${info.deposit_usd} دولار` : null].filter(Boolean) as string[]
+    : [];
   const navigate = useNavigate();
   const [codeOpen, setCodeOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -290,7 +285,7 @@ function RequirementsPage() {
   const mark = (k: string) => setDone((d) => ({ ...d, [k]: true }));
 
   const openPlatform = (k: string) => {
-    const url = PLATFORM_LINKS[platform] ?? PLATFORM_LINKS["1xBet"];
+    const url = info?.register_url;
     if (url) window.open(url, "_blank", "noopener,noreferrer");
     mark(k);
   };
@@ -581,7 +576,7 @@ function RequirementsPage() {
             done={!!done["deposit"]}
           >
             <div className="mb-3 grid grid-cols-2 gap-3">
-              {(PLATFORM_DEPOSITS[platform] ?? PLATFORM_DEPOSITS["1xBet"] ?? []).map((v) => (
+              {deposits.map((v) => (
                 <div
                   key={v}
                   className="rounded-xl border border-primary/40 py-3 text-center text-base font-extrabold text-primary"
