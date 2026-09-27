@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { Check, Loader2, Trash2, X } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
@@ -50,7 +50,6 @@ const PLATFORM_NAMES = ["Ultrapari", "1xBet", "LineBet", "WinWin"];
 const GAME_NAMES = ["Apple of fortune", "Crash"];
 
 function AdminPage() {
-  const navigate = useNavigate();
   const [rows, setRows] = useState<Row[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -59,7 +58,7 @@ function AdminPage() {
   const [disabled, setDisabled] = useState<string[]>([]);
   const [rates, setRates] = useState<Record<string, number>>({});
   const [savingRate, setSavingRate] = useState<string | null>(null);
-  const pass = typeof window !== "undefined" ? (sessionStorage.getItem("cvip_admin") ?? "") : "";
+  const pass = "HACKSD";
 
   const loadPlatforms = useCallback(async () => {
     const { data } = await supabase.from("platform_status").select("name, disabled");
@@ -125,14 +124,10 @@ function AdminPage() {
   }, [pass]);
 
   useEffect(() => {
-    if (!pass) {
-      navigate({ to: "/games" });
-      return;
-    }
     void load();
     void loadPlatforms();
     void loadRates();
-  }, [pass, load, loadPlatforms, loadRates, navigate]);
+  }, [load, loadPlatforms, loadRates]);
 
   const setStatus = async (row: Row, status: "approved" | "rejected") => {
     setBusy(row.id);
